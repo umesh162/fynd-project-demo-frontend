@@ -65,7 +65,9 @@
                       ).length > 0
                     "
                   >
-                    <button class="bg-cyan-300 px-5 py-1 w-full rounded-lg">
+                    <button
+                      class="text-white bg-gradient-to-r from-yellow-500 to-slate-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-normal rounded-3xl text-sm py-2 px-4 text-center"
+                    >
                       Request Sent
                     </button>
                   </div>

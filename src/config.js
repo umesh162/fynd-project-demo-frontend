@@ -1,5 +1,8 @@
 const Config = {
   baseUrl: "http://localhost:3000",
+  //Production
+  // baseUrl: "/",
+
   TOKEN_KEY: "token",
   EMAIL_KEY: "email",
 };

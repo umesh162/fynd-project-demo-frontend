@@ -44,7 +44,7 @@
                   class="object-contain p-2 bg-slate-50 h-64 w-full"
                 />
                 <div class="w-full">
-                  <p class="px-3">{{ item.title }}</p>
+                  <p class="px-3 break-all">{{ item.title }}</p>
                 </div>
               </div>
               <div class="flex items-center justify-around pt-2">
@@ -101,7 +101,7 @@
                     View All Comments
                   </button>
                 </div>
-                <div v-show="showComments" class="bg-opacity-20">
+                <div v-if="showComments" class="bg-opacity-20">
                   <ViewAllCom :toggle="commToggle" />
                 </div>
               </div>

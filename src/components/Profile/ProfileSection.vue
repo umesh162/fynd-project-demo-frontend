@@ -3,15 +3,21 @@
     class="border-slate-300 overflow-auto row-span-full rounded-r-lg overflow-auto scroll-hidden"
   >
     <div>
-      <div class="shadow-lg p-3 rounded-lg mt-5">
+      <div
+        class="shadow-lg p-3 rounded-lg mt-5"
+        :class="!singleChannel.data && 'height-profile'"
+      >
         <h3 class="text-left py-2 font-semibold">Profile Details</h3>
         <div class="grid justify-items-center">
+          <!-- {{ userDetails.user.profile }} -->
           <div class="grid justify-center w-1/3">
-            <img
-              :src="userDetails.user.profile"
-              alt="Home community"
-              class="h-24 rounded-full"
-            />
+            <div v-if="userDetails.user.profile !== undefined">
+              <img
+                :src="userDetails.user.profile"
+                alt="Home community"
+                class="h-24 rounded-full"
+              />
+            </div>
             <div class="text-center">
               <p class="">
                 {{
@@ -45,7 +51,8 @@
           </div>
         </div>
       </div>
-      <div v-if="singleChannel.length > 0">
+
+      <div v-if="!!singleChannel.data" class="height-div">
         <div class="shadow-lg p-3 rounded-lg">
           <h3 class="text-left py-2 font-semibold">Channel Details</h3>
 
@@ -64,7 +71,7 @@
                   singleChannel.data.type
                 }}</span>
               </div>
-              <p>
+              <p class="break-all">
                 {{ singleChannel.data.description }}
               </p>
               <p>
@@ -122,10 +129,10 @@
         />
       </div>
     </div>
-    <div v-show="visible">
+    <div v-if="visible">
       <CreateChannel :toggle="toggle" />
     </div>
-    <div v-show="editVisible">
+    <div v-if="editVisible">
       <EditProfile :toggle="editToggle" />
     </div>
     <div v-if="editChannel && singleChannel.length > 0">
@@ -247,5 +254,14 @@ export default {
 .scroll-hidden::-webkit-scrollbar {
   /* Firefox */
   display: none;
+}
+
+@media (max-width: 575px) {
+  .height-div {
+    height: 42vh;
+  }
+  .height-profile {
+    height: 35vh;
+  }
 }
 </style>

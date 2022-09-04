@@ -18,9 +18,26 @@
 import ProfileSection from "../Profile/ProfileSection.vue";
 import PostSection from "./PostSection.vue";
 import CommList from "./CommList.vue";
+import { mapState } from "vuex";
 
 export default {
   components: { ProfileSection, PostSection, CommList },
+  computed: {
+    ...mapState("comm", ["userJoinComm"]),
+  },
+  methods: {
+    async channelFirst() {
+      await this.$store.dispatch("comm/singleChannInfo", {
+        _id: this.userJoinComm[0]._id,
+      });
+      await this.$store.dispatch("comm/CommAllPost", {
+        getByCommunity: this.userJoinComm[0]._id,
+      });
+    },
+  },
+  mounted() {
+    this.channelFirst();
+  },
 };
 </script>
 
@@ -32,6 +49,8 @@ export default {
   }
   .main {
     grid-template-columns: repeat(1, minmax(0, 1fr));
+
+    padding: 1.25rem 0px 1.25rem 0px;
   }
   /* .pluse {
     position: absolute;

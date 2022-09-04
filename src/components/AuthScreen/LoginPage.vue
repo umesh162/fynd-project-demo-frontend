@@ -103,7 +103,7 @@
               </div>
             </div>
 
-            <div class="flex justify-between items-center mb-6">
+            <!-- <div class="flex justify-between items-center mb-6">
               <div class="form-group form-check">
                 <input
                   type="checkbox"
@@ -117,7 +117,7 @@
                 >
               </div>
               <a href="#!" class="text-gray-800">Forgot password?</a>
-            </div>
+            </div> -->
 
             <div class="text-center lg:text-left">
               <div>
@@ -185,7 +185,7 @@ export default {
   data() {
     return {
       // test3@gmail.com
-      form: { email: "test3@gmail.com", password: "Umesh@123" },
+      form: { email: "", password: "" },
       // form: { email: "umeshpalival@gmail.com", password: "Umesh@123" },
       errMsg: "",
       isLoading: "",

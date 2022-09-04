@@ -29,12 +29,12 @@
                 type="text"
                 class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 placeholder="First Name"
-                v-model="firstName"
-                @blur="$v.firstName.$touch()"
+                v-model="form.firstname"
+                @blur="$v.form.firstname.$touch()"
               />
             </div>
-            <div v-if="$v.firstName.$error">
-              <div v-if="!$v.firstName.required" class="error-message">
+            <div v-if="$v.form.firstname.$error">
+              <div v-if="!$v.form.firstname.required" class="error-message">
                 <small class="text-red-600"
                   >The FirstName field is required</small
                 >
@@ -52,12 +52,12 @@
                 class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 id="exampleFormControlInput2"
                 placeholder="last Name"
-                v-model="lastName"
-                @blur="$v.lastName.$touch()"
+                v-model="form.lastname"
+                @blur="$v.form.lastname.$touch()"
               />
             </div>
-            <div v-if="$v.lastName.$error">
-              <div v-if="!$v.lastName.required" class="error-message">
+            <div v-if="$v.form.lastname.$error">
+              <div v-if="!$v.form.lastname.required" class="error-message">
                 <small class="text-red-600"
                   >The Last Name field is required</small
                 >
@@ -75,15 +75,15 @@
                 class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 id="exampleFormControlInput2"
                 placeholder="Email address"
-                v-model="email"
-                @blur="$v.email.$touch()"
+                v-model="form.email"
+                @blur="$v.form.email.$touch()"
               />
             </div>
-            <div v-if="$v.email.$error">
-              <div v-if="!$v.email.required" class="error-message">
+            <div v-if="$v.form.email.$error">
+              <div v-if="!$v.form.email.required" class="error-message">
                 <small class="text-red-600">The email field is required</small>
               </div>
-              <div v-if="!$v.email.email" class="error-message">
+              <div v-if="!$v.form.email.email" class="error-message">
                 <small class="text-red-600">Invalid email address</small>
               </div>
             </div>
@@ -100,12 +100,12 @@
                 class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 id="exampleFormControlInput2"
                 placeholder="Phone Number"
-                v-model="phone"
-                @blur="$v.phone.$touch()"
+                v-model="form.phone"
+                @blur="$v.form.phone.$touch()"
               />
             </div>
-            <div v-if="$v.phone.$error">
-              <div v-if="!$v.phone.required" class="error-message">
+            <div v-if="$v.form.phone.$error">
+              <div v-if="!$v.form.phone.required" class="error-message">
                 <small class="text-red-600">The phone field is required</small>
               </div>
             </div>
@@ -123,37 +123,49 @@
                 class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 id="exampleFormControlInput2"
                 placeholder="Password"
-                v-model="password"
-                @blur="$v.password.$touch()"
+                v-model="form.password"
+                @blur="$v.form.password.$touch()"
               />
             </div>
-            <div v-if="$v.password.$error">
-              <div v-if="!$v.password.required" class="error-message">
+            <div v-if="$v.form.password.$error">
+              <div v-if="!$v.form.password.required" class="error-message">
                 <small class="text-red-600"
                   >The password field is required</small
                 >
               </div>
-              <div v-if="!$v.password.minLength" class="error-message">
+              <div v-if="!$v.form.password.minLength" class="error-message">
                 <small class="text-red-600"
                   >The password must have at least 8 characters</small
                 >
               </div>
-              <div v-if="!$v.password.containsUppercase" class="error-message">
+              <div
+                v-if="!$v.form.password.containsUppercase"
+                class="error-message"
+              >
                 <small class="text-red-600"
                   >The password must have at least 1 uppercase character</small
                 >
               </div>
-              <div v-if="!$v.password.containsLowercase" class="error-message">
+              <div
+                v-if="!$v.form.password.containsLowercase"
+                class="error-message"
+              >
                 <small class="text-red-600"
                   >The password must have at least 1 lowercase character</small
                 >
               </div>
-              <div v-if="!$v.password.containsNumber" class="error-message">
+              <div
+                v-if="!$v.form.password.containsNumber"
+                class="error-message"
+              >
                 <small class="text-red-600"
                   >The password must have at least 1 digit</small
                 >
               </div>
-              <div v-if="!$v.password.containsSpecial" class="error-message">
+              <div
+                v-if="!$v.form.password.containsSpecial"
+                class="error-message"
+              >
                 <small class="text-red-600"
                   >The password must have at least 1 special character</small
                 >
@@ -171,8 +183,8 @@
                 class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 id="exampleFormControlInput2"
                 placeholder="Password"
-                v-model="confirmPassword"
-                @blur="$v.confirmPassword.$touch()"
+                v-model="form.confirmPassword"
+                @blur="$v.form.confirmPassword.$touch()"
               />
             </div>
 
@@ -240,68 +252,61 @@ export default {
   name: "RegisterPage",
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      password: "",
-      confirmPassword: "",
+      form: {
+        firstname: "",
+        lastname: "",
+        email: "",
+        phone: "",
+        password: "",
+        confirmPassword: "",
+      },
       isLoading: "",
     };
   },
   validations: {
-    firstName: {
-      required,
-    },
-    lastName: {
-      required,
-    },
-    email: {
-      required,
-      email,
-    },
-    phone: {
-      required,
-    },
-    password: {
-      required,
-      minLength: minLength(8),
-      containsUppercase: function (value) {
-        return /[A-Z]/.test(value);
+    form: {
+      firstname: {
+        required,
       },
-      containsLowercase: function (value) {
-        return /[a-z]/.test(value);
+      lastname: {
+        required,
       },
-      containsNumber: function (value) {
-        return /[0-9]/.test(value);
+      email: {
+        required,
+        email,
       },
-      containsSpecial: function (value) {
-        return /[#?!@$%^&*-]/.test(value);
+      phone: {
+        required,
       },
-    },
-    confirmPassword: {
-      required,
-      sameAs: sameAs("password"),
+      password: {
+        required,
+        minLength: minLength(8),
+        containsUppercase: function (value) {
+          return /[A-Z]/.test(value);
+        },
+        containsLowercase: function (value) {
+          return /[a-z]/.test(value);
+        },
+        containsNumber: function (value) {
+          return /[0-9]/.test(value);
+        },
+        containsSpecial: function (value) {
+          return /[#?!@$%^&*-]/.test(value);
+        },
+      },
+      confirmPassword: {
+        required,
+        sameAs: sameAs("password"),
+      },
     },
   },
   methods: {
     async signUp() {
-      if (
-        this.firstName &&
-        this.lastName &&
-        this.email &&
-        this.phone &&
-        this.password &&
-        this.confirmPassword
-      ) {
-        if (this.password === this.confirmPassword) {
-          let payload = {
-            firstname: this.firstName,
-            lastname: this.lastName,
-            phone: this.phone,
-            email: this.email,
-            password: this.password,
-          };
+      this.$v.form.$touch();
+      let payload = this.form;
+
+      if (!this.$v.form.$invalid) {
+        if (this.form.password === this.form.confirmPassword) {
           this.isLoading = true;
           let response = await this.$store.dispatch(
             "auth/registerUserAction",
@@ -319,7 +324,7 @@ export default {
           alert("Password and confirm password does not match");
         }
       } else {
-        alert("Please fill all the fields");
+        this.$swal.fire("Please fill all details", "", "error");
       }
     },
   },

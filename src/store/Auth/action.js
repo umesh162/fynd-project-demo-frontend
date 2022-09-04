@@ -24,6 +24,7 @@ export default {
 
   logout() {
     localStorage.removeItem(Config.TOKEN_KEY, "");
+
     return true;
   },
   async registerUserAction({ commit }, payload) {

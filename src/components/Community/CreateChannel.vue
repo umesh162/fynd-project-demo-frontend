@@ -73,22 +73,22 @@
               <button
                 class="w-40 py-2 border border-blue-600 rounded"
                 :class="
-                  form.channelType === 'public'
+                  form.channelType === 'Public'
                     ? 'bg-blue-600 text-white'
                     : 'border-blue-600 text-blue-800 '
                 "
-                v-on:click.prevent="selectType('public')"
+                v-on:click.prevent="selectType('Public')"
               >
                 Public
               </button>
               <button
                 class="w-40 py-2 border border-blue-600 rounded"
                 :class="
-                  form.channelType === 'private'
+                  form.channelType === 'Private'
                     ? 'bg-blue-600 text-white'
                     : 'border-blue-600 text-blue-800 '
                 "
-                v-on:click.prevent="selectType('private')"
+                v-on:click.prevent="selectType('Private')"
               >
                 Private
               </button>
@@ -159,7 +159,7 @@ export default {
       selectedFile: null,
       imgS3Url: null,
       isLoading: false,
-      form: { channelName: "", des: "", channelType: "public" },
+      form: { channelName: "", des: "", channelType: "Public" },
     };
   },
   validations: {
@@ -197,7 +197,7 @@ export default {
         communityName: this.form.channelName,
         description: this.form.des,
         communityImage: this.imgS3Url,
-        type: this.form.type,
+        type: this.form.channelType,
       };
       this.isLoading = true;
       let res = await this.$store.dispatch("comm/createCommunity", payload);
