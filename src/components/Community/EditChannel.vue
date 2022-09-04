@@ -29,10 +29,19 @@
               <div class="">
                 <div class="relative mb-4">
                   <img
+                    v-if="previewUrl === null"
                     :src="singleChannel.data.communityImage"
                     alt="Home community"
                     class="w-24 h-24 rounded-full"
                   />
+                  <div
+                    class="w-24 h-24 rounded-full"
+                    v-if="previewUrl !== null"
+                    :style="{
+                      'background-image': `url(${previewUrl})`,
+                      'background-size': 'cover',
+                    }"
+                  ></div>
                   <div
                     class="absolute right-0 -bottom-2"
                     v-on:click="$refs.file.click()"
@@ -131,6 +140,7 @@ export default {
       selectedFile: null,
       imgS3Url: null,
       isLoading: false,
+      previewUrl: null,
       form: {
         commName: "",
         commDes: "",
@@ -152,7 +162,7 @@ export default {
   methods: {
     async onFileSelected(e) {
       this.selectedFile = e.target.files[0];
-      console.log(this.selectedFile);
+      this.previewUrl = URL.createObjectURL(e.target.files[0]);
       let payload = new FormData();
       payload.append("image", this.selectedFile);
       this.isLoading = true;
@@ -183,8 +193,19 @@ export default {
           this.imgS3Url !== null ? this.imgS3Url : this.form.commImg,
       };
 
-      await this.$store.dispatch("comm/editCommunity", payload);
-      this.toggle();
+      let res = await this.$store.dispatch("comm/editCommunity", payload);
+
+      if (res) {
+        this.$swal.fire("Successfully Edited", "", "success");
+        await this.$store.dispatch("comm/getUserJoinComm");
+        await this.$store.dispatch("comm/singleChannInfo", {
+          _id: payload.communityId,
+        });
+
+        this.toggle();
+      } else {
+        this.$swal.fire("Something Went wrong", "", "error");
+      }
     },
   },
   mounted() {

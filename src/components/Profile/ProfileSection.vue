@@ -8,14 +8,17 @@
         :class="!singleChannel.data && 'height-profile'"
       >
         <h3 class="text-left py-2 font-semibold">Profile Details</h3>
-        <div class="grid justify-items-center">
+        <div class="grid justify-center">
           <!-- {{ userDetails.user.profile }} -->
-          <div class="grid justify-center w-1/3">
-            <div v-if="userDetails.user.profile !== undefined">
+          <div class="text-center">
+            <div
+              v-if="userDetails.user.profile !== undefined"
+              class="text-center"
+            >
               <img
                 :src="userDetails.user.profile"
                 alt="Home community"
-                class="h-24 rounded-full"
+                class="rounded-full img-height"
               />
             </div>
             <div class="text-center">
@@ -57,11 +60,11 @@
           <h3 class="text-left py-2 font-semibold">Channel Details</h3>
 
           <div class="flex items-center">
-            <div class="w-16">
+            <div class="">
               <img
                 :src="singleChannel.data.communityImage"
                 alt="Home community"
-                class="h-16 rounded-full"
+                class="rounded-full img-height"
               />
             </div>
             <div class="flex flex-col flex-1 ml-2">
@@ -135,7 +138,7 @@
     <div v-if="editVisible">
       <EditProfile :toggle="editToggle" />
     </div>
-    <div v-if="editChannel && singleChannel.length > 0">
+    <div v-if="editChannel && !!singleChannel.data">
       <EditChannel :toggle="editChnToggle" />
     </div>
   </div>
@@ -254,6 +257,11 @@ export default {
 .scroll-hidden::-webkit-scrollbar {
   /* Firefox */
   display: none;
+}
+
+.img-height {
+  width: 80px;
+  height: 77px;
 }
 
 @media (max-width: 575px) {

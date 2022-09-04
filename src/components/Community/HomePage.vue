@@ -24,9 +24,16 @@ export default {
   computed: {
     ...mapState("comm", ["commList", "userJoinComm"]),
   },
-  async created() {
-    await this.$store.dispatch("comm/getUserJoinComm");
-    await this.$store.dispatch("comm/getAllCOmmunity");
+  methods: {
+    async createdCall() {
+      console.log("Created called");
+      await this.$store.dispatch("comm/getUserJoinComm");
+      await this.$store.dispatch("comm/getAllCOmmunity");
+      console.log("Created called");
+    },
+  },
+  mounted() {
+    this.createdCall();
   },
 };
 </script>

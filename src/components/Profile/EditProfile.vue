@@ -29,10 +29,19 @@
               <div class="">
                 <div class="relative mb-4">
                   <img
+                    v-if="previewUrl === null"
                     :src="userDetails.user.profile"
                     alt="Home community"
                     class="w-24 h-24 rounded-full"
                   />
+                  <div
+                    class="w-24 h-24 rounded-full"
+                    v-if="previewUrl !== null"
+                    :style="{
+                      'background-image': `url(${previewUrl})`,
+                      'background-size': 'cover',
+                    }"
+                  ></div>
                   <div
                     class="absolute right-0 -bottom-2"
                     v-on:click="$refs.file.click()"
@@ -147,6 +156,7 @@ export default {
       selectedFile: null,
       imgS3Url: null,
       isLoading: false,
+      previewUrl: null,
       form: {
         firstname: "",
         lastname: "",
@@ -172,7 +182,8 @@ export default {
   methods: {
     async onFileSelected(e) {
       this.selectedFile = e.target.files[0];
-      console.log(this.selectedFile);
+      this.previewUrl = URL.createObjectURL(e.target.files[0]);
+
       let payload = new FormData();
       payload.append("image", this.selectedFile);
       this.isLoading = true;

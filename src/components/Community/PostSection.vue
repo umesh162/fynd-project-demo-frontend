@@ -22,12 +22,16 @@
                 <div class="flex-1 mx-4">
                   <h3>
                     {{
-                      item.createdBy.user[0].firstname +
+                      (item.createdBy.user[0].firstname
+                        ? item.createdBy.user[0].firstname
+                        : " ") +
                       " " +
-                      item.createdBy.user[0].lastname
+                      (item.createdBy.user[0].lastname
+                        ? item.createdBy.user[0].lastname
+                        : " ")
                     }}
                   </h3>
-                  <p>Posted 2 hours ago</p>
+                  <p>{{ timeCalculate(item.createdAt) }}</p>
                 </div>
                 <div
                   v-show="item.createdBy.user[0]._id === userDetails.user._id"
@@ -107,29 +111,6 @@
               </div>
             </div>
           </div>
-
-          <div class="bottom-24 sticky btn-bottom">
-            <button
-              class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-semibold rounded-full text-md px-6 py-5 text-center absolute right-0 bottom-0"
-              @click="toggle"
-            >
-              <!-- class="bg-blue-400 px-6 py-5 rounded-full absolute bottom-2
-              right-0 hover:bg-slate-400 active:bg-slate-400 focus:outline-none" -->
-
-              <i class="fa-solid fa-plus fa-lg"></i>
-            </button>
-          </div>
-          <div class="max-screen">
-            <button
-              class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-semibold rounded-full text-md px-6 py-5 text-center absolute plus-btn"
-              @click="toggle"
-            >
-              <!-- class="bg-blue-400 px-6 py-5 rounded-full absolute bottom-2
-              right-0 hover:bg-slate-400 active:bg-slate-400 focus:outline-none" -->
-
-              <i class="fa-solid fa-plus fa-lg"></i>
-            </button>
-          </div>
         </div>
       </div>
       <div v-else class="">
@@ -175,15 +156,42 @@ export default {
   },
 
   methods: {
-    toggle() {
-      this.visible = !this.visible;
-    },
     commToggle() {
       this.showComments = !this.showComments;
+    },
+    toggle() {
+      this.visible = !this.visible;
     },
     checkMyLink(item) {
       return !!item.isLike;
     },
+
+    timeCalculate(time) {
+      let diffTime = Math.abs(new Date().valueOf() - new Date(time).valueOf());
+      let days = diffTime / (24 * 60 * 60 * 1000);
+      let hours = (days % 1) * 24;
+      let minutes = (hours % 1) * 60;
+
+      [days, hours, minutes] = [
+        Math.floor(days),
+        Math.floor(hours),
+        Math.floor(minutes),
+      ];
+
+      let dur;
+      if (days == 0 && hours == 0 && minutes == 0) {
+        dur = "Just Now";
+      } else if (days == 0 && hours == 0) {
+        dur = `${minutes} minutes ago`;
+      } else if (days == 0 && hours > 0) {
+        dur = `${hours} hours ago`;
+      } else {
+        dur = `${days} days ago`;
+      }
+
+      return dur;
+    },
+
     async viewComm(item) {
       await this.$store.dispatch("comm/allComments", item);
       this.commToggle();

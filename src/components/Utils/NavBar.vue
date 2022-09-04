@@ -73,6 +73,15 @@
               >
             </li>
 
+            <li class="btn-li">
+              <a
+                href="#"
+                @click="toggle"
+                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-semibold rounded-full text-md py-2 px-8 text-center second-btn"
+                >Create post</a
+              >
+            </li>
+
             <li>
               <a
                 @click="logout"
@@ -89,17 +98,22 @@
     <div v-if="joinToggleClick">
       <AllCommModal :toggle="joinToggle" />
     </div>
+    <div v-if="visible">
+      <CreatePost :toggle="toggle" />
+    </div>
   </div>
 </template>
 
 <script>
 import AllCommModal from "../Community/AllCommModal.vue";
+import CreatePost from "../Community/CreatePost.vue";
 export default {
   Name: "Navbar",
   data() {
     return {
       hidNav: true,
       joinToggleClick: false,
+      visible: false,
     };
   },
   methods: {
@@ -113,11 +127,14 @@ export default {
     joinToggle() {
       this.joinToggleClick = !this.joinToggleClick;
     },
+    toggle() {
+      this.visible = !this.visible;
+    },
     resposive() {
       this.hidNav = !this.hidNav;
     },
   },
-  components: { AllCommModal },
+  components: { AllCommModal, CreatePost },
 };
 </script>
 

@@ -34,7 +34,7 @@
 
       <div class="height overflow-auto scroll-hidden hide-all">
         <div class="px-2">
-          <div class="sticky top-0 bg-white p-5">
+          <div class="bg-white p-5">
             <h3 class="text-center my-1 text-lg font-semibold">
               All Community
             </h3>

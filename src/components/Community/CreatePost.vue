@@ -2,7 +2,7 @@
   <div class="container mx-auto">
     <div class="flex justify-center">
       <div
-        v-show="true"
+        v-if="true"
         class="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50 h-screen bg-opa"
       >
         <form class="max-w-2xl p-6 bg-white rounded-md shadow-xl">
@@ -27,7 +27,11 @@
           <form class="mt-4">
             <div class="flex justify-center">
               <div
-                class="flex items-center justify-center w-full h-60 border-2 border-dashed border-red-400"
+                class="flex items-center justify-center w-full h-60 border-2 border-dashed border-red-400 bg-cover"
+                :style="{
+                  'background-image': `url(${previewUrl})`,
+                  'background-size': 'cover',
+                }"
               >
                 <input type="file" @change="onFileSelected" accept="image/*" />
               </div>
@@ -140,6 +144,7 @@ export default {
       selectedFile: null,
       imgS3Url: null,
       isLoading: false,
+      previewUrl: null,
       form: {
         channelId: "",
         des: "",
@@ -155,7 +160,8 @@ export default {
   methods: {
     async onFileSelected(e) {
       this.selectedFile = e.target.files[0];
-      console.log(this.selectedFile);
+
+      this.previewUrl = URL.createObjectURL(e.target.files[0]);
       let payload = new FormData();
       payload.append("image", this.selectedFile);
       this.isLoading = true;
@@ -180,19 +186,23 @@ export default {
         Image: this.imgS3Url,
       };
 
-      let response = await this.$store.dispatch("comm/CreatePost", payload);
-      if (response.code === 400) {
-        this.$swal.fire(response.msg, "", "error");
-      } else {
-        this.$swal.fire("Post Created", "", "success");
-        await this.$store.dispatch("comm/singleChannInfo", {
-          _id: this.form.channelChoose,
-        });
+      if (this.form.channelChoose !== "") {
+        let response = await this.$store.dispatch("comm/CreatePost", payload);
+        if (response.code === 400) {
+          this.$swal.fire(response.msg, "", "error");
+        } else {
+          this.$swal.fire("Post Created", "", "success");
+          await this.$store.dispatch("comm/singleChannInfo", {
+            _id: this.form.channelChoose,
+          });
 
-        await this.$store.dispatch("comm/CommAllPost", {
-          getByCommunity: this.form.channelChoose,
-        });
-        this.toggle();
+          await this.$store.dispatch("comm/CommAllPost", {
+            getByCommunity: this.form.channelChoose,
+          });
+          this.toggle();
+        }
+      } else {
+        this.$swal.fire("Please Select a Channel", "", "error");
       }
     },
   },
