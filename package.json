@@ -6,8 +6,8 @@
     "start": "npm run serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "rimraf":"rimraf ../server/public",
-    "copyfiles":"copyfiles -u 1 ./dist/**/* ../server/public",
+    "rimraf":"rimraf ../backend/public",
+    "copyfiles":"copyfiles -u 1 ./dist/**/* ../backend/public",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
