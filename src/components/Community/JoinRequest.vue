@@ -10,16 +10,18 @@
       >
         <p>{{ item.user.firstname + " " + item.user.lastname }}</p>
         <div class="flex w-28 justify-between">
-          <div class="border-2 rounded-full bg-green-300">
+          <div class="border-2 rounded-full bg-green-400 hover:bg-green-300">
             <button
+              :disabled="isDisable"
               class="px-4 py-3"
               @click="joinRequest(item.user._id, 'true')"
             >
               <i class="fa-solid fa-check"></i>
             </button>
           </div>
-          <div class="border-2 rounded-full bg-red-500">
+          <div class="border-2 rounded-full bg-red-500 hover:bg-red-400">
             <button
+              :disabled="isDisable"
               class="px-5 py-3"
               @click="joinRequest(item.user._id, 'false')"
             >
@@ -36,6 +38,11 @@
 import { mapState } from "vuex";
 export default {
   name: "JoinRequest",
+   data() {
+    return {
+      isDisable: false,
+    };
+  },
   computed: {
     ...mapState("comm", ["singleChannel"]),
   },
@@ -54,19 +61,15 @@ export default {
         isAccept: val,
       };
 
-      let res = await this.$store.dispatch("comm/acceptRequest", payload);
-
-      if (res) {
-        await this.$store.dispatch("comm/singleChannInfo", {
-          _id: this.singleChannel.data._id,
-        });
-        this.$swal.fire("Request Rejected", "", "error");
-      } else {
-        await this.$store.dispatch("comm/singleChannInfo", {
-          _id: this.singleChannel.data._id,
-        });
-        this.$swal.fire("Member Joined", "", "success");
-      }
+       this.isDisable = true;
+      await this.$store.dispatch("comm/acceptRequest", payload);
+      await this.$store.dispatch("comm/singleChannInfo", {
+        _id: this.singleChannel.data._id,
+      });
+      this.isDisable = false;
+      val === "true"
+        ? this.$swal.fire("Member Joined", "", "success")
+        : this.$swal.fire("Request Rejected", "", "error");
     },
   },
 };
